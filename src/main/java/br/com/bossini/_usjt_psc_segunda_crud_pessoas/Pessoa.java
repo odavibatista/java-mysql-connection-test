@@ -21,10 +21,6 @@ public class Pessoa {
     public int getCodigo()  {
         return codigo;
     }
-    
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
-    }
 
     public String getNome() {
         return nome;
@@ -36,5 +32,21 @@ public class Pessoa {
 
     public String getEmail() {
         return email;
+    }
+    
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+    
+    public void setNome(String nome)    {
+        this.nome = nome;
+    }
+    
+    public void setFone(String fone) {
+        this.fone = fone;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
