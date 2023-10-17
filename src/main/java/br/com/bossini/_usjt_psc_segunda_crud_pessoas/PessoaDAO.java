@@ -20,7 +20,7 @@ public class PessoaDAO {
         String email = pessoa.getEmail();
         
         //1 - Especificar o comando SQL
-        String sql = "INSERT INTO tb_pessoas (nome, fone, email) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO tb_pessoa (nome, fone, email) VALUES (?, ?, ?);";
         //2 - Abrir uma conexão com o mySql
         var fabricaDeConexoes = new ConnectionFactory();
         var conexao = fabricaDeConexoes.conectar();
@@ -44,24 +44,48 @@ public class PessoaDAO {
         String email = pessoa.getEmail();
         
         //1. Especificar o comando SQL
-        String sql = "UPDATE tb_pessoa SET nome = ?, fone = ?, email = ? WHERE codigo = ?;";
+        String sql = "UPDATE tb_pessoa SET nome = ?, fone = ?, email = ? WHERE cod_pessoa = ?;";
         
         //2 - Abrir uma conexão com o mySql
-        var fabricaDeConexoes = new ConnectionFactory();
-        var conexao = fabricaDeConexoes.conectar();
         
-        //3 - Preparar o comando
-        PreparedStatement ps = conexao.prepareStatement(sql);
+        try (
+                var conexao = ConnectionFactory.conectar();
+                //3 - Preparar o comando
+                var ps = conexao.prepareStatement(sql);
+            ){
+            //4 - Substituir os eventuais placeholders
+            ps.setString(1, nome);
+            ps.setString(2, fone);
+            ps.setString(3, email);
+            ps.setInt(4, codigo);
+            //5 - Executar o comando preparado
+            ps.execute();
+            //6 - Fechar a conexão -> Já foi feito pelo try
+        } catch (Exception e) {
+        }
+    }
+    
+    public void desativar (Pessoa pessoa) throws Exception {
+        //1. Especificar o comando SQL
         
-        //4 - Substituir os eventuais placeholders
-        ps.setString(1, nome);
-        ps.setString(2, fone);
-        ps.setString(3, email);
-        ps.setInt(4, codigo);
-        //5 - Executar o comando preparado
-        ps.execute();
-        //6 - Fechar a conexão
-        ps.close();
-        conexao.close();  
+    }
+    
+    public void deletar (int codigo) throws Exception {
+        //1. Especificar o comando SQL
+        String sql = "DELETE FROM tb_pessoa WHERE cod_pessoa = ?;";
+        //2 - Abrir uma conexão com o SQL
+        try (
+                var conexao = new ConnectionFactory().conectar();
+                //3 - Preparar o comando
+                var ps = conexao.prepareStatement(sql);
+            ){
+            //4 - Substituir os eventuais placeholders
+            ps.setInt(1, codigo);
+            //5 - Executar o comando preparado
+            ps.execute();
+            //6 - Fechar a conexão -> Já foi feito pelo try
+        } catch (Exception e) {
+        }
+        
     }
 }

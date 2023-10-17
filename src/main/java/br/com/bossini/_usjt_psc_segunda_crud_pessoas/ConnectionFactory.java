@@ -8,13 +8,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 public class ConnectionFactory {
     // Preencher com informações do Aiven
-    private final String host = "";
-    private final String port = "";
-    private final String user = "";
-    private final String password = "";
-    private final String db = "";
+    private static final String host = "";
+    private static final String port = "";
+    private static final String user = "";
+    private static final String password = "";
+    private static final String db = "";
     
-    public Connection conectar() throws Exception {
+    public static Connection conectar() throws Exception {
         //http://dontpad.com:80/bossini
         //String de conexão
         //String s = "jdbc:mysql://" + host + ":" + port + "/" + db;
