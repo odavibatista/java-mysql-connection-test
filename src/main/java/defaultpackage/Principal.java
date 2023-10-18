@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
  */
 public class Principal {
     public static void main(String[] args) throws Exception {
-        String menu = "1-Cadastrar\\n2-Listar\\n3-Atualizar\\n4-Remover\\n0-Sair";
+        String menu = "1-Cadastrar\n2-Listar\n3-Atualizar\n4-Remover\n0-Sair";
         var pessoaDAO = new PessoaDAO();
         int op;
         
@@ -30,11 +30,21 @@ public class Principal {
                     String email = JOptionPane.showInputDialog("Digite o e-mail:");
                     var pessoa = new Pessoa(nome, fone, email);
                     pessoaDAO.cadastrar(pessoa);
+                    JOptionPane.showMessageDialog(null, "Usuário " + nome + " cadastrado com sucesso!");
+                    break;
+                case 2:
+                    pessoaDAO.listar();
                     break;
                 case 4:
                     int codigo = Integer.parseInt(JOptionPane.showInputDialog("Digite o código do usuário a ser removido"));JOptionPane.showInputDialog("Digite o código do usuário a ser removido");
                     pessoaDAO.deletar(codigo);
                     JOptionPane.showMessageDialog(null, "Deletado com sucesso!");
+                    break;
+                case 0:
+                    JOptionPane.showMessageDialog(null, "Saindo...");
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "Insira uma opção válida.");
                     break;
             }
         } while(true);

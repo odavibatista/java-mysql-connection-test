@@ -5,6 +5,7 @@
 package br.com.bossini._usjt_psc_segunda_crud_pessoas;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  *
@@ -87,5 +88,29 @@ public class PessoaDAO {
         } catch (Exception e) {
         }
         
+    }
+    
+    public void listar() throws Exception   {
+        String sql = "SELECT * FROM tb_pessoa;";
+        
+        try (
+                var conexao = ConnectionFactory.conectar();
+                //3 - Preparar o comando
+                var ps = conexao.prepareStatement(sql);
+                
+                ResultSet rs = ps.executeQuery();
+            ){
+                while(rs.next()){
+                    String nome = rs.getString("nome");
+                    String fone = rs.getString("fone");
+                    String email = rs.getString("email");
+
+                    System.out.printf("nome: %s, fone: %s, email: %s\n", nome, fone, email);
+                    rs.next();
+                }
+                
+        } catch (Exception e) {
+            
+        }
     }
 }
